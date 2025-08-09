@@ -27,7 +27,7 @@ async function fetchInstagramPostsSince(sinceISO: string): Promise<RawPost[]> {
   if (!token) return [];
 
   // Apify instagram-profile-scraper'ı run-sync ile çalıştır (tek request, direkt item'lar döner)
-  const url = `https://api.apify.com/v2/acts/apify~instagram-profile-scraper/run-sync-get-dataset-items?token=${token}`;
+  const url = `https://api.apify.com/v2/acts/apify~instagram-scraper/run-sync-get-dataset-items?token=${token}`;
 
   const res = await fetch(url, {
     method: "POST",
