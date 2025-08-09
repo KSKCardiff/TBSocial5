@@ -30,17 +30,16 @@ async function fetchInstagramPostsSince(sinceISO: string): Promise<RawPost[]> {
   const url = `https://api.apify.com/v2/acts/apify~instagram-scraper/run-sync-get-dataset-items?token=${token}`;
 
   const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    // Dikkat: run-sync-get-dataset-items'ta body, actor input'udur (input:{} sarması yok)
-    body: JSON.stringify({
-      directUrls: INSTAGRAM_PROFILES,
-      resultsLimit: 30,          // daha çok post getir
-      searchType: "posts",
-    }),
-    // Edge runtime'da cache kapalı
-    cache: "no-store",
-  });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    directUrls: INSTAGRAM_PROFILES, // profil URL listesi
+    resultsType: "posts",           // 🔴 kritik: post verisi istiyoruz
+    resultsLimit: 30,               // daha çok post
+    // proxy: { useApifyProxy: true } // opsiyonel
+  }),
+  cache: "no-store",
+});
 
   if (!res.ok) {
     // İsteğe bağlı: hatayı client'a göstermek için mesaj döndürebilirsin
