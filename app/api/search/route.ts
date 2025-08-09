@@ -33,13 +33,15 @@ async function fetchInstagramPostsSince(sinceISO: string): Promise<RawPost[]> {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    directUrls: INSTAGRAM_PROFILES, // profil URL listesi
-    resultsType: "posts",           // 🔴 kritik: post verisi istiyoruz
-    resultsLimit: 30,               // daha çok post
-    // proxy: { useApifyProxy: true } // opsiyonel
+    directUrls: INSTAGRAM_PROFILES,   // profil URL listesi
+    resultsType: "posts",             // post verisi istiyoruz
+    resultsLimit: 30,                 // daha çok post getir
+    onlyPostsNewerThan: sinceISO,     // 🔴 zaman filtresi doğrudan aktöre
+    proxy: { useApifyProxy: true }    // 🔴 engellenmemek için Apify proxy
   }),
   cache: "no-store",
 });
+
 
   if (!res.ok) {
     // İsteğe bağlı: hatayı client'a göstermek için mesaj döndürebilirsin
